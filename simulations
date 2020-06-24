@@ -30,25 +30,6 @@ sim1.perc50.m9.p5 <- sim.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", 
 
 
 
-# p = 3 is 10%  missing with 3 variable with NA 
-sim1.perc10.m9.p3 <- sim.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
-                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 7, m.nmar = .04, 
-                                groups = c(-.9,-.8), labels = c(.035, .035, .035), p = 3, minsize = 20, c = .9,
-                                regression = TRUE)
-
-
-
-# p = 3 is 30%  missing with 3 variable with NA 
-sim1.perc30.m9.p3 <- sim.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
-                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 20, m.nmar = .25, 
-                                groups = c(-.9,-.8), labels = c(.1, .1, .1), p = 3, minsize = 20, c = .9,
-                                regression = TRUE)
-
-# p = 3 is 50%  missing with 3 variable with NA 
-sim1.perc50.m9.p3 <- sim.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
-                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 32, m.nmar = .35, 
-                                groups = c(-.9,-.8), labels = c(.16, .16, .16), p = 3, minsize = 20, c = .9,
-                                regression = TRUE)
 
 
 
@@ -103,29 +84,6 @@ sim1.perc50.m4.p5 <- sim.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", 
                                 regression = TRUE)
 
 
-
-
-# p = 3 is 10%  missing with 3 variable with NA 
-sim1.perc10.m4.p3 <- sim.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
-                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 7, m.nmar = .04, 
-                                groups = c(-.9,-.8), labels = c(.035, .035, .035), p = 3, minsize = 20, c = .4,
-                                regression = TRUE)
-
-
-
-# p = 3 is 30%  missing with 3 variable with NA 
-sim1.perc30.m4.p3 <- sim.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
-                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 20, m.nmar = .25, 
-                                groups = c(-.9,-.8), labels = c(.1, .1, .1), p = 3, minsize = 20, c = .4,
-                                regression = TRUE)
-
-
-
-# p = 3 is 50%  missing with 3 variable with NA 
-sim1.perc50.m4.p3 <- sim.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
-                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 32, m.nmar = .35, 
-                                groups = c(-.9,-.8), labels = c(.16, .16, .16), p = 3, minsize = 20, c = .4,
-                                regression = TRUE)
 
 
 
