@@ -897,6 +897,693 @@ g6 <- ggplot(data = val.sur.p1.mar, aes(p.missing,MAR, group = 1)) +
 ggarrange(g4, g5, g6,ncol = 1, nrow = 3, heights = c(3, 3, 3))
 
 
+# plot experiment I NMAR
+
+val.sur.p5.nmar <- data.frame(val.sim1.matrix.m9.surr[3], val.sim1.matrix.m9.surr[6], val.sim1.matrix.m9.surr[9])
+val.sur.p5.nmar <- t(val.sur.p5.nmar)
+val.sur.p5.nmar <- as.data.frame(val.sur.p5.nmar)
+val.mia.p5.nmar <- data.frame(val.sim1.matrix.m9.mia[3], val.sim1.matrix.m9.mia[6], val.sim1.matrix.m9.mia[9])
+val.mia.p5.nmar <- t(val.mia.p5.nmar)
+val.mia.p5.nmar <- as.data.frame(val.mia.p5.nmar)
+
+val.sur.p5.nmar.m4 <- data.frame(val.sim1.matrix.m4.surr[3], val.sim1.matrix.m4.surr[6], val.sim1.matrix.m4.surr[9])
+val.sur.p5.nmar.m4 <- t(val.sur.p5.nmar.m4)
+val.sur.p5.nmar.m4 <- as.data.frame(val.sur.p5.nmar.m4)
+val.mia.p5.nmar.m4 <- data.frame(val.sim1.matrix.m4.mia[3], val.sim1.matrix.m4.mia[6], val.sim1.matrix.m4.mia[9])
+val.mia.p5.nmar.m4 <- t(val.mia.p5.nmar.m4)
+val.mia.p5.nmar.m4 <- as.data.frame(val.mia.p5.nmar.m4)
+
+
+g7 <- ggplot(data = val.sur.p5.nmar, aes(p.missing,NMAR, group = 1)) +
+  geom_line(data = val.sur.p5.nmar, aes(p.missing,NMAR, colour = "Surrogate Split")) +
+  geom_point(data = val.sur.p5.nmar, aes(p.missing,NMAR), color = "lightblue") +
+  geom_line(data = val.mia.p5.nmar, aes(x = p.missing, y = NMAR, group = 1), 
+            color = "red") +
+  geom_point(data = val.mia.p5.nmar, aes(x = p.missing, y = NMAR, colour = "MIA"),
+             color = "red") +
+  geom_line(data = val.sur.p5.nmar.m4, aes(p.missing, NMAR, colour = "Surrogate Split"),
+            linetype = "longdash") +
+  geom_point(data = val.sur.p5.nmar.m4, aes(p.missing, NMAR, colour = "Surrogate Split"), 
+             color = "lightblue") +
+  geom_line(data = val.mia.p5.nmar.m4, aes(x = p.missing, y = NMAR, group = 1), 
+            linetype = "longdash", color = "red") +
+  geom_point(data = val.mia.p5.nmar.m4, aes(x = p.missing, y = NMAR, colour = "MIA")) +
+  theme_classic() +
+  xlab("Missing Values (%)") + ylab("Excess Error Rate") +
+  ggtitle("Missing Values (%) vs Excess Error Rate (NMAR)") +
+  guides(color = guide_legend(title = "Method")) + 
+  annotate(geom = "text", x = 3.2, y = 20, label = "m = 0.9", color = "black", size = 3) + 
+  annotate(geom = "text", x = 3.2, y = 13, label = "m = 0.4", color = "black", size = 3)
+
+
+val.sur.p3.nmar <- data.frame(val.sim1.matrix.m9.surr[12], val.sim1.matrix.m9.surr[15], val.sim1.matrix.m9.surr[18])
+val.sur.p3.nmar <- t(val.sur.p3.nmar)
+val.sur.p3.nmar <- as.data.frame(val.sur.p3.nmar)
+val.mia.p3.nmar <- data.frame(val.sim1.matrix.m9.mia[12], val.sim1.matrix.m9.mia[15], val.sim1.matrix.m9.mia[18])
+val.mia.p3.nmar <- t(val.mia.p3.nmar)
+val.mia.p3.nmar <- as.data.frame(val.mia.p3.nmar)
+
+val.sur.p3.nmar.m4 <- data.frame(val.sim1.matrix.m4.surr[12], val.sim1.matrix.m4.surr[15], val.sim1.matrix.m4.surr[18])
+val.sur.p3.nmar.m4 <- t(val.sur.p3.nmar.m4)
+val.sur.p3.nmar.m4 <- as.data.frame(val.sur.p3.nmar.m4)
+val.mia.p3.nmar.m4 <- data.frame(val.sim1.matrix.m4.mia[12], val.sim1.matrix.m4.mia[15], val.sim1.matrix.m4.mia[18])
+val.mia.p3.nmar.m4 <- t(val.mia.p3.nmar.m4)
+val.mia.p3.nmar.m4 <- as.data.frame(val.mia.p3.nmar.m4)
+
+g8 <- ggplot(data = val.sur.p3.nmar, aes(p.missing,NMAR, group = 1)) +
+  geom_line(data = val.sur.p3.nmar, aes(p.missing,NMAR, colour = "Surrogate Split")) +
+  geom_point(data = val.sur.p3.nmar, aes(p.missing,NMAR), color = "lightblue") +
+  geom_line(data = val.mia.p3.nmar, aes(x = p.missing, y = NMAR, group = 1), 
+            color = "red") +
+  geom_point(data = val.mia.p3.nmar, aes(x = p.missing, y = NMAR, colour = "MIA"),
+             color = "red") +
+  geom_line(data = val.sur.p3.nmar.m4, aes(p.missing, NMAR, colour = "Surrogate Split"),
+            linetype = "longdash") +
+  geom_point(data = val.sur.p3.nmar.m4, aes(p.missing, NMAR, colour = "Surrogate Split"), 
+             color = "lightblue") +
+  geom_line(data = val.mia.p3.nmar.m4, aes(x = p.missing, y = NMAR, group = 1), 
+            linetype = "longdash", color = "red") +
+  geom_point(data = val.mia.p3.nmar.m4, aes(x = p.missing, y = NMAR, colour = "MIA")) +
+  theme_classic() +
+  xlab("Missing Values (%)") + ylab("Excess Error Rate") +
+  guides(color = guide_legend(title = "Method")) + 
+  annotate(geom = "text", x = 3.2, y = 30, label = "m = 0.9", color = "black", size = 3) + 
+  annotate(geom = "text", x = 3.2, y = 15, label = "m = 0.4", color = "black", size = 3)
+
+
+val.sur.p1.nmar <- data.frame(val.sim1.matrix.m9.surr[21], val.sim1.matrix.m9.surr[24], val.sim1.matrix.m9.surr[27])
+val.sur.p1.nmar <- t(val.sur.p1.nmar)
+val.sur.p1.nmar <- as.data.frame(val.sur.p1.nmar)
+val.mia.p1.nmar <- data.frame(val.sim1.matrix.m9.mia[21], val.sim1.matrix.m9.mia[24], val.sim1.matrix.m9.mia[27])
+val.mia.p1.nmar <- t(val.mia.p1.nmar)
+val.mia.p1.nmar <- as.data.frame(val.mia.p1.nmar)
+
+val.sur.p1.nmar.m4 <- data.frame(val.sim1.matrix.m4.surr[21], val.sim1.matrix.m4.surr[24], val.sim1.matrix.m4.surr[27])
+val.sur.p1.nmar.m4 <- t(val.sur.p1.nmar.m4)
+val.sur.p1.nmar.m4 <- as.data.frame(val.sur.p1.nmar.m4)
+val.mia.p1.nmar.m4 <- data.frame(val.sim1.matrix.m4.mia[21], val.sim1.matrix.m4.mia[24], val.sim1.matrix.m4.mia[27])
+val.mia.p1.nmar.m4 <- t(val.mia.p1.nmar.m4)
+val.mia.p1.nmar.m4 <- as.data.frame(val.mia.p1.nmar.m4)
+
+g9 <- ggplot(data = val.sur.p1.nmar, aes(p.missing,NMAR, group = 1)) +
+  geom_line(data = val.sur.p1.nmar, aes(p.missing,NMAR, colour = "Surrogate Split")) +
+  geom_point(data = val.sur.p1.nmar, aes(p.missing,NMAR), color = "lightblue") +
+  geom_line(data = val.mia.p1.nmar, aes(x = p.missing, y = NMAR, group = 1), 
+            color = "red") +
+  geom_point(data = val.mia.p1.nmar, aes(x = p.missing, y = NMAR, colour = "MIA"),
+             color = "red") +
+  geom_line(data = val.sur.p1.nmar.m4, aes(p.missing, NMAR, colour = "Surrogate Split"),
+            linetype = "longdash") +
+  geom_point(data = val.sur.p1.nmar.m4, aes(p.missing, NMAR, colour = "Surrogate Split"), 
+             color = "lightblue") +
+  geom_line(data = val.mia.p1.nmar.m4, aes(x = p.missing, y = NMAR, group = 1), 
+            linetype = "longdash", color = "red") +
+  geom_point(data = val.mia.p1.nmar.m4, aes(x = p.missing, y = NMAR, colour = "MIA")) +
+  theme_classic() +
+  xlab("Missing Values (%)") + ylab("Excess Error Rate") +
+  guides(color = guide_legend(title = "Method")) + 
+  annotate(geom = "text", x = 3.2, y = 21.6, label = "m = 0.9", color = "black", size = 3) + 
+  annotate(geom = "text", x = 3.2, y = 14.3, label = "m = 0.4", color = "black", size = 3)
+
+ggarrange(g7, g8, g9,ncol = 1, nrow = 3, heights = c(3, 3, 3))
+
+
+
+
+####### Eperiment II
+
+## experiment 2 
+
+# p = 5 is 10%  missing with 1 variable with NA 
+perc = 0.1
+var = c( 0, 1, 1, 1, 1)
+sim1.perc10.m9.p5 <- sim2.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
+                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 20, m.nmar = .2, 
+                                groups = c(-.9,-.8), labels = c(.1, .1, .1), p = 5, minsize = 20, c,
+                                regression = TRUE)
+apply(sim1.perc10.m9.p5[[1]], 2, mean)
+apply(sim1.perc10.m9.p5[[2]], 2, mean)
+apply(sim1.perc10.m9.p5[[3]], 2, mean)
+apply(sim1.perc10.m9.p5[[4]], 2, mean)
+
+# p = 5 is 30%  missing with 1 variable with NA 
+perc = 0.3
+var = c(0, 1, 1, 1, 1)
+sim1.perc30.m9.p5 <- sim2.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
+                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 60, m.nmar = .6, 
+                                groups = c(-.9,-.8), labels = c(.3, .3, .3), p = 5, minsize = 20, c,
+                                regression = TRUE)
+apply(sim1.perc30.m9.p5[[1]], 2, mean)
+apply(sim1.perc30.m9.p5[[2]], 2, mean)
+apply(sim1.perc30.m9.p5[[3]], 2, mean)
+apply(sim1.perc30.m9.p5[[4]], 2, mean)
+
+# p = 5 is 50%  missing with 1 variable with NA 
+perc = 0.5
+var = c(0, 1, 1, 1, 1)
+sim1.perc50.m9.p5 <- sim2.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
+                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 100, m.nmar = 1, 
+                                groups = c(-.9,-.8), labels = c(.5, .5, .5), p = 5, minsize = 20, c,
+                                regression = TRUE)
+apply(sim1.perc50.m9.p5[[1]], 2, mean)
+apply(sim1.perc50.m9.p5[[2]], 2, mean)
+apply(sim1.perc50.m9.p5[[3]], 2, mean)
+apply(sim1.perc50.m9.p5[[4]], 2, mean)
+
+
+
+# p = 3 is 10%  missing with 3 variable with NA 
+perc = 0.1
+var = NULL
+sim1.perc10.m9.p3 <- sim2.fun.r2.2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
+                                  formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 7, m.nmar = .04, 
+                                  groups = c(-.9,-.8), labels = c(.035, .035, .035), p = 3, minsize = 20, c,
+                                  regression = TRUE)
+apply(sim1.perc10.m9.p3[[1]], 2, mean)
+apply(sim1.perc10.m9.p3[[2]], 2, mean)
+apply(sim1.perc10.m9.p3[[3]], 2, mean)
+apply(sim1.perc10.m9.p3[[4]], 2, mean)
+
+
+# p = 3 is 30%  missing with 3 variable with NA 
+perc = 0.3
+var = NULL
+sim1.perc30.m9.p3 <- sim2.fun.r2.2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
+                                  formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 20, m.nmar = .25, 
+                                  groups = c(-.9,-.8), labels = c(.1, .1, .1), p = 3, minsize = 20, c,
+                                  regression = TRUE)
+apply(sim1.perc30.m9.p3[[1]], 2, mean)
+apply(sim1.perc30.m9.p3[[2]], 2, mean)
+apply(sim1.perc30.m9.p3[[3]], 2, mean)
+apply(sim1.perc30.m9.p3[[4]], 2, mean)
+
+
+# p = 3 is 50%  missing with 3 variable with NA 
+perc = 0.5
+var = NULL
+sim1.perc50.m9.p3 <- sim2.fun.r2.2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
+                                  formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 32, m.nmar = .35, 
+                                  groups = c(-.9,-.8), labels = c(.16, .16, .16), p = 3, minsize = 20, c,
+                                  regression = TRUE)
+apply(sim1.perc50.m9.p3[[1]], 2, mean)
+apply(sim1.perc50.m9.p3[[2]], 2, mean)
+apply(sim1.perc50.m9.p3[[3]], 2, mean)
+apply(sim1.perc50.m9.p3[[4]], 2, mean)
+
+
+# p = 1 is 10%  missing with 5 variable with NA 
+perc = 0.1
+var = NULL
+sim1.perc10.m9.p1 <- sim2.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
+                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 4, m.nmar = .03, 
+                                groups = c(-.9,-.8), labels = c(.02, .02, .02), p = 1, minsize = 20, c,
+                                regression = TRUE)
+apply(sim1.perc10.m9.p1[[1]], 2, mean)
+apply(sim1.perc10.m9.p1[[2]], 2, mean)
+apply(sim1.perc10.m9.p1[[3]], 2, mean)
+apply(sim1.perc10.m9.p1[[4]], 2, mean)
+
+# p = 1 is 30%  missing with 5 variable with NA 
+perc = 0.3
+var = NULL
+sim1.perc30.m9.p1 <- sim2.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
+                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 12, m.nmar = .08, 
+                                groups = c(-.9,-.8), labels = c(.06, .06, .06), p = 1, minsize = 20, c,
+                                regression = TRUE)
+apply(sim1.perc30.m9.p1[[1]], 2, mean)
+apply(sim1.perc30.m9.p1[[2]], 2, mean)
+apply(sim1.perc30.m9.p1[[3]], 2, mean)
+apply(sim1.perc30.m9.p1[[4]], 2, mean)
+
+# p = 1 is 50%  missing with 5 variable with NA 
+perc = 0.5
+var = NULL
+sim1.perc50.m9.p1 <- sim2.fun.r2(coefs = NULL, sigma = NULL, var_names = c("x1", "x2", "x3", "x4", "x5"), 
+                                formula = y ~ x1 + x2 + x3 + x4 + x5, R = 500, n = 200, m.mcar = 20, m.nmar = .13, 
+                                groups = c(-.9,-.8), labels = c(.1, .1, .1), p = 1, minsize = 20, c,
+                                regression = TRUE)
+apply(sim1.perc50.m9.p1[[1]], 2, mean)
+apply(sim1.perc50.m9.p1[[2]], 2, mean)
+apply(sim1.perc50.m9.p1[[3]], 2, mean)
+apply(sim1.perc50.m9.p1[[4]], 2, mean)
+
+
+
+
+library(xtable)
+## Matrix and Plots for experiment II
+
+# matrix for excess error rate
+sim1.matrix.m9.surr <-  data.frame(sim1.perc10.m9.p5[[1]], sim1.perc30.m9.p5[[1]], sim1.perc50.m9.p5[[1]],
+                                   sim1.perc10.m9.p3[[1]], sim1.perc30.m9.p3[[1]], sim1.perc50.m9.p3[[1]],
+                                   sim1.perc10.m9.p1[[1]], sim1.perc30.m9.p1[[1]], sim1.perc50.m9.p1[[1]])
+c.names <- rep(c("MCAR", "MAR", "NMAR"), 9)
+colnames(sim1.matrix.m9.surr) <- c.names
+val.sim1.matrix.m9.surr <- apply(sim1.matrix.m9.surr, 2, mean)
+
+
+
+val.sim1.matrix.m9.surr.mat <- matrix(val.sim1.matrix.m9.surr, ncol = 9)
+colnames(val.sim1.matrix.m9.surr.mat) <- c("uv10%", "uv30%", "uv50%", "m10%", "m30%", "m50%",
+                                           "uf10%", "uf30%", "uf50%")
+rownames(val.sim1.matrix.m9.surr.mat) <- c("MCAR", "MAR", "NMAR")
+xtable(val.sim1.matrix.m9.surr.mat)
+xtable(t(val.sim1.matrix.m9.surr.mat))
+
+sim1.matrix.m9.mia <-  data.frame(sim1.perc10.m9.p5[[2]], sim1.perc30.m9.p5[[2]], sim1.perc50.m9.p5[[2]],
+                                  sim1.perc10.m9.p3[[2]], sim1.perc30.m9.p3[[2]], sim1.perc50.m9.p3[[2]],
+                                  sim1.perc10.m9.p1[[2]], sim1.perc30.m9.p1[[2]], sim1.perc50.m9.p1[[2]])
+colnames(sim1.matrix.m9.mia) <- c.names
+val.sim1.matrix.m9.mia <- apply(sim1.matrix.m9.mia, 2, mean)
+
+val.sim1.matrix.m9.mia.mat <- matrix(val.sim1.matrix.m9.mia, ncol = 9)
+colnames(val.sim1.matrix.m9.mia.mat) <- c("uv10%", "uv30%", "uv50%", "m10%", "m30%", "m50%",
+                                          "uf10%", "uf30%", "uf50%")
+rownames(val.sim1.matrix.m9.mia.mat) <- c("MCAR", "MAR", "NMAR")
+xtable((val.sim1.matrix.m9.mia.mat))
+xtable(t(val.sim1.matrix.m9.mia.mat))
+
+
+
+
+
+
+
+# matrix for error for experimetn II
+sim1.matrix.m9.surr.err <-  data.frame(sim1.perc10.m9.p5[[3]], sim1.perc30.m9.p5[[3]], sim1.perc50.m9.p5[[3]],
+                                       sim1.perc10.m9.p3[[3]], sim1.perc30.m9.p3[[3]], sim1.perc50.m9.p3[[3]],
+                                       sim1.perc10.m9.p1[[3]], sim1.perc30.m9.p1[[3]], sim1.perc50.m9.p1[[3]])
+c.names <- rep(c("MCAR", "MAR", "NMAR"), 9)
+colnames(sim1.matrix.m9.surr.err) <- c.names
+val.sim1.matrix.m9.surr.err <- apply(sim1.matrix.m9.surr.err, 2, mean)
+
+
+
+val.sim1.matrix.m9.surr.mat.err <- matrix(val.sim1.matrix.m9.surr.err, ncol = 9)
+colnames(val.sim1.matrix.m9.surr.mat.err) <- c("uv10%", "uv30%", "uv50%", "m10%", "m30%", "m50%",
+                                               "uf10%", "uf30%", "uf50%")
+rownames(val.sim1.matrix.m9.surr.mat.err) <- c("MCAR", "MAR", "NMAR")
+xtable(val.sim1.matrix.m9.surr.mat.err)
+xtable(t(val.sim1.matrix.m9.surr.mat.err), digits = 4)
+
+sim1.matrix.m9.mia.err <-  data.frame(sim1.perc10.m9.p5[[4]], sim1.perc30.m9.p5[[4]], sim1.perc50.m9.p5[[4]],
+                                      sim1.perc10.m9.p3[[4]], sim1.perc30.m9.p3[[4]], sim1.perc50.m9.p3[[4]],
+                                      sim1.perc10.m9.p1[[4]], sim1.perc30.m9.p1[[4]], sim1.perc50.m9.p1[[4]])
+colnames(sim1.matrix.m9.mia.err) <- c.names
+val.sim1.matrix.m9.mia.err <- apply(sim1.matrix.m9.mia.err, 2, mean)
+
+val.sim1.matrix.m9.mia.mat.err <- matrix(val.sim1.matrix.m9.mia.err, ncol = 9)
+colnames(val.sim1.matrix.m9.mia.mat.err) <- c("uv10%", "uv30%", "uv50%", "m10%", "m30%", "m50%",
+                                              "uf10%", "uf30%", "uf50%")
+rownames(val.sim1.matrix.m9.mia.mat.err) <- c("MCAR", "MAR", "NMAR")
+xtable((val.sim1.matrix.m9.mia.mat.err))
+xtable(t(val.sim1.matrix.m9.mia.mat.err), digits = 4)
+
+
+
+
+## Anova for experiment II
+sim1an.matrix.m9.surr <-  data.frame(sim1.perc10.m9.p5[[1]], sim1.perc30.m9.p5[[1]], sim1.perc50.m9.p5[[1]],
+                                     
+                                     sim1.perc10.m9.p1[[1]], sim1.perc30.m9.p1[[1]], sim1.perc50.m9.p1[[1]],
+                                     sim1.perc10.m9.p3[[1]], sim1.perc30.m9.p3[[1]], sim1.perc50.m9.p3[[1]])
+#c.names2 <- rep(c("MCAR", "MAR", "NMAR"), 6)
+colnames(sim1an.matrix.m9.surr) <- c.names
+
+new.sim1an.matrix.m9.surr <- data.frame(sim1an.matrix.m9.surr[, 1:3])
+new.sim1an.matrix.m9.surr$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.surr$missing.perc <- as.factor(rep(10, 500))
+new.sim1an.matrix.m9.surr$method <- as.factor(rep("surrogate", 500))
+new.sim1an.matrix.m9.surr$v.miss <- as.factor(rep(1, 500))
+
+new.sim1an.matrix.m9.surr.30 <- data.frame(sim1an.matrix.m9.surr[, 4:6])
+new.sim1an.matrix.m9.surr.30$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.surr.30$missing.perc <- as.factor(rep(30, 500))
+new.sim1an.matrix.m9.surr.30$method <- as.factor(rep("surrogate", 500))
+new.sim1an.matrix.m9.surr.30$v.miss <- as.factor(rep(1, 500))
+
+new.sim1an.matrix.m9.surr.50 <- data.frame(sim1an.matrix.m9.surr[, 7:9])
+new.sim1an.matrix.m9.surr.50$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.surr.50$missing.perc <- as.factor(rep(50, 500))
+new.sim1an.matrix.m9.surr.50$method <- as.factor(rep("surrogate", 500))
+new.sim1an.matrix.m9.surr.50$v.miss <- as.factor(rep(1, 500))
+
+new.sim1an.matrix.m9.surr.multi <- data.frame(sim1an.matrix.m9.surr[, 10:12])
+new.sim1an.matrix.m9.surr.multi$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.surr.multi$missing.perc <- as.factor(rep(10, 500))
+new.sim1an.matrix.m9.surr.multi$method <- as.factor(rep("surrogate", 500))
+new.sim1an.matrix.m9.surr.multi$v.miss <- as.factor(rep(5, 500))
+
+new.sim1an.matrix.m9.surr.30.multi <- data.frame(sim1an.matrix.m9.surr[, 13:15])
+new.sim1an.matrix.m9.surr.30.multi$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.surr.30.multi$missing.perc <- as.factor(rep(30, 500))
+new.sim1an.matrix.m9.surr.30.multi$method <- as.factor(rep("surrogate", 500))
+new.sim1an.matrix.m9.surr.30.multi$v.miss <- as.factor(rep(5, 500))
+
+new.sim1an.matrix.m9.surr.50.multi <- data.frame(sim1an.matrix.m9.surr[, 16:18])
+new.sim1an.matrix.m9.surr.50.multi$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.surr.50.multi$missing.perc <- as.factor(rep(50, 500))
+new.sim1an.matrix.m9.surr.50.multi$method <- as.factor(rep("surrogate", 500))
+new.sim1an.matrix.m9.surr.50.multi$v.miss <- as.factor(rep(5, 500))
+
+new.sim1an.matrix.m9.surr.multi3 <- data.frame(sim1an.matrix.m9.surr[, 19:21])
+new.sim1an.matrix.m9.surr.multi3$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.surr.multi3$missing.perc <- as.factor(rep(10, 500))
+new.sim1an.matrix.m9.surr.multi3$method <- as.factor(rep("surrogate", 500))
+new.sim1an.matrix.m9.surr.multi3$v.miss <- as.factor(rep(3, 500))
+
+new.sim1an.matrix.m9.surr.30.multi3 <- data.frame(sim1an.matrix.m9.surr[, 22:24])
+new.sim1an.matrix.m9.surr.30.multi3$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.surr.30.multi3$missing.perc <- as.factor(rep(30, 500))
+new.sim1an.matrix.m9.surr.30.multi3$method <- as.factor(rep("surrogate", 500))
+new.sim1an.matrix.m9.surr.30.multi3$v.miss <- as.factor(rep(3, 500))
+
+new.sim1an.matrix.m9.surr.50.multi3 <- data.frame(sim1an.matrix.m9.surr[, 25:27])
+new.sim1an.matrix.m9.surr.50.multi3$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.surr.50.multi3$missing.perc <- as.factor(rep(50, 500))
+new.sim1an.matrix.m9.surr.50.multi3$method <- as.factor(rep("surrogate", 500))
+new.sim1an.matrix.m9.surr.50.multi3$v.miss <- as.factor(rep(3, 500))
+
+sim1an.matrix.m9.mia <-  data.frame(sim1.perc10.m9.p5[[2]], sim1.perc30.m9.p5[[2]], sim1.perc50.m9.p5[[2]],
+                                    
+                                    sim1.perc10.m9.p1[[2]], sim1.perc30.m9.p1[[2]], sim1.perc50.m9.p1[[2]],
+                                    sim1.perc10.m9.p3[[2]], sim1.perc30.m9.p3[[2]], sim1.perc50.m9.p3[[2]])
+colnames(sim1an.matrix.m9.mia) <- c.names
+new.sim1an.matrix.m9.mia <- data.frame(sim1an.matrix.m9.mia[, 1:3])
+new.sim1an.matrix.m9.mia$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.mia$missing.perc <- as.factor(rep(10, 500))
+new.sim1an.matrix.m9.mia$method <- as.factor(rep("mia", 500))
+new.sim1an.matrix.m9.mia$v.miss <- as.factor(rep(1, 500))
+
+new.sim1an.matrix.m9.mia.30 <- data.frame(sim1an.matrix.m9.mia[, 4:6])
+new.sim1an.matrix.m9.mia.30$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.mia.30$missing.perc <- as.factor(rep(30, 500))
+new.sim1an.matrix.m9.mia.30$method <- as.factor(rep("mia", 500))
+new.sim1an.matrix.m9.mia.30$v.miss <- as.factor(rep(1, 500))
+
+new.sim1an.matrix.m9.mia.50 <- data.frame(sim1an.matrix.m9.surr[, 7:9])
+new.sim1an.matrix.m9.mia.50$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.mia.50$missing.perc <- as.factor(rep(50, 500))
+new.sim1an.matrix.m9.mia.50$method <- as.factor(rep("mia", 500))
+new.sim1an.matrix.m9.mia.50$v.miss <- as.factor(rep(1, 500))
+
+new.sim1an.matrix.m9.mia.multi <- data.frame(sim1an.matrix.m9.mia[, 10:12])
+new.sim1an.matrix.m9.mia.multi$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.mia.multi$missing.perc <- as.factor(rep(10, 500))
+new.sim1an.matrix.m9.mia.multi$method <- as.factor(rep("mia", 500))
+new.sim1an.matrix.m9.mia.multi$v.miss <- as.factor(rep(5, 500))
+
+new.sim1an.matrix.m9.mia.30.multi <- data.frame(sim1an.matrix.m9.mia[, 13:15])
+new.sim1an.matrix.m9.mia.30.multi$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.mia.30.multi$missing.perc <- as.factor(rep(30, 500))
+new.sim1an.matrix.m9.mia.30.multi$method <- as.factor(rep("mia", 500))
+new.sim1an.matrix.m9.mia.30.multi$v.miss <- as.factor(rep(5, 500))
+
+new.sim1an.matrix.m9.mia.50.multi <- data.frame(sim1an.matrix.m9.surr[, 16:18])
+new.sim1an.matrix.m9.mia.50.multi$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.mia.50.multi$missing.perc <- as.factor(rep(50, 500))
+new.sim1an.matrix.m9.mia.50.multi$method <- as.factor(rep("mia", 500))
+new.sim1an.matrix.m9.mia.50.multi$v.miss <- as.factor(rep(5, 500))
+
+new.sim1an.matrix.m9.mia.multi3 <- data.frame(sim1an.matrix.m9.surr[, 19:21])
+new.sim1an.matrix.m9.mia.multi3$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.mia.multi3$missing.perc <- as.factor(rep(10, 500))
+new.sim1an.matrix.m9.mia.multi3$method <- as.factor(rep("mia", 500))
+new.sim1an.matrix.m9.mia.multi3$v.miss <- as.factor(rep(3, 500))
+
+new.sim1an.matrix.m9.mia.30.multi3 <- data.frame(sim1an.matrix.m9.surr[, 22:24])
+new.sim1an.matrix.m9.mia.30.multi3$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.mia.30.multi3$missing.perc <- as.factor(rep(30, 500))
+new.sim1an.matrix.m9.mia.30.multi3$method <- as.factor(rep("mia", 500))
+new.sim1an.matrix.m9.mia.30.multi3$v.miss <- as.factor(rep(3, 500))
+
+new.sim1an.matrix.m9.mia.50.multi3 <- data.frame(sim1an.matrix.m9.surr[, 25:27])
+new.sim1an.matrix.m9.mia.50.multi3$tuning <- as.factor(rep(0.9, 500))
+new.sim1an.matrix.m9.mia.50.multi3$missing.perc <- as.factor(rep(50, 500))
+new.sim1an.matrix.m9.mia.50.multi3$method <- as.factor(rep("mia", 500))
+new.sim1an.matrix.m9.mia.50.multi3$v.miss <- as.factor(rep(3, 500))
+
+new.sim1an.matrix.m9.miasurr.10 <- rbind(new.sim1an.matrix.m9.surr, new.sim1an.matrix.m9.mia)
+new.sim1an.matrix.m9.miasurr.30 <- rbind(new.sim1an.matrix.m9.surr.30, new.sim1an.matrix.m9.mia.30)
+new.sim1an.matrix.m9.miasurr.50 <- rbind(new.sim1an.matrix.m9.surr.50, new.sim1an.matrix.m9.mia.50)
+new.sim1an.matrix.m9.miasurr.10.multi <- rbind(new.sim1an.matrix.m9.surr.multi, new.sim1an.matrix.m9.mia.multi)
+new.sim1an.matrix.m9.miasurr.30.multi <- rbind(new.sim1an.matrix.m9.surr.30.multi, new.sim1an.matrix.m9.mia.30.multi)
+new.sim1an.matrix.m9.miasurr.50.multi <- rbind(new.sim1an.matrix.m9.surr.50.multi, new.sim1an.matrix.m9.mia.50.multi)
+new.sim1an.matrix.m9.miasurr.10.multi3 <- rbind(new.sim1an.matrix.m9.surr.multi3, new.sim1an.matrix.m9.mia.multi3)
+new.sim1an.matrix.m9.miasurr.30.multi3 <- rbind(new.sim1an.matrix.m9.surr.30.multi3, new.sim1an.matrix.m9.mia.30.multi3)
+new.sim1an.matrix.m9.miasurr.50.multi3 <- rbind(new.sim1an.matrix.m9.surr.50.multi3, new.sim1an.matrix.m9.mia.50.multi3)
+
+new.sim1an.matrix.m9.miasurr.10.long <- gather(new.sim1an.matrix.m9.miasurr.10, values, measurement, MCAR:NMAR, factor_key=TRUE)
+new.sim1an.matrix.m9.miasurr.30.long <- gather(new.sim1an.matrix.m9.miasurr.30, values, measurement, MCAR:NMAR, factor_key=TRUE)
+new.sim1an.matrix.m9.miasurr.50.long <- gather(new.sim1an.matrix.m9.miasurr.30, values, measurement, MCAR:NMAR, factor_key=TRUE)
+new.sim1an.matrix.m9.miasurr.10.long.multi <- gather(new.sim1an.matrix.m9.miasurr.10.multi, values, measurement, MCAR:NMAR, factor_key=TRUE)
+new.sim1an.matrix.m9.miasurr.30.long.multi <- gather(new.sim1an.matrix.m9.miasurr.30.multi, values, measurement, MCAR:NMAR, factor_key=TRUE)
+new.sim1an.matrix.m9.miasurr.50.long.multi <- gather(new.sim1an.matrix.m9.miasurr.50.multi, values, measurement, MCAR:NMAR, factor_key=TRUE)
+new.sim1an.matrix.m9.miasurr.10.long.multi3 <- gather(new.sim1an.matrix.m9.miasurr.10.multi3, values, measurement, MCAR:NMAR, factor_key=TRUE)
+new.sim1an.matrix.m9.miasurr.30.long.multi3 <- gather(new.sim1an.matrix.m9.miasurr.30.multi3, values, measurement, MCAR:NMAR, factor_key=TRUE)
+new.sim1an.matrix.m9.miasurr.50.long.multi3 <- gather(new.sim1an.matrix.m9.miasurr.50.multi3, values, measurement, MCAR:NMAR, factor_key=TRUE)
+newdatasim1.long <- rbind(new.sim1an.matrix.m9.miasurr.10.long, new.sim1an.matrix.m9.miasurr.30.long, new.sim1an.matrix.m9.miasurr.50.long,
+                          new.sim1an.matrix.m9.miasurr.10.long.multi, new.sim1an.matrix.m9.miasurr.30.long.multi, new.sim1an.matrix.m9.miasurr.50.long.multi,
+                          new.sim1an.matrix.m9.miasurr.10.long.multi3, new.sim1an.matrix.m9.miasurr.30.long.multi3, new.sim1an.matrix.m9.miasurr.50.long.multi3)
+
+
+
+
+
+
+#newdatasim1full.long <- rbind(newdatasim1.long ,newdatasim1m4.long)
+newdatasim1full.long <- newdatasim1.long
+
+newdatasim1full.long$measurement <- as.numeric(newdatasim1full.long$measurement)
+newdatasim1full.long$id <- as.factor(rep(1:54, each = 500))
+#newdatasim1full.long$id <- (as.factor(1:36000))
+
+newdatasim1full.long <- as.data.frame(newdatasim1full.long)
+sum(is.na(newdatasim1full.long))
+
+#ezDesign(data = newdatasim1full.long
+#         , x = values
+#         , y = measurement)
+library(ez)
+sim_anova1 <- suppressWarnings(ezANOVA( # use ezANOVA for analysis
+  data = newdatasim1full.long
+  , dv = measurement 
+  , wid = id
+  , within_full = .c(method, v.miss)
+  , between = .c(missing.perc, tuning, values)
+))
+
+sim_anova2 <- suppressWarnings(ezANOVA( # use ezANOVA for analysis
+  data = newdatasim1full.long
+  , dv = measurement 
+  , wid = id
+  , within_full = method
+  , between = .c(missing.perc, values)
+))
+
+AnovaResult1 <- cbind(sim_anova2$ANOVA[1:3], (sim_anova2$ANOVA[,c(4,5,7)]))
+AnovaResult1$size <- ifelse(AnovaResult1$ges >= 0.06, '*', '')
+AnovaResult1
+
+
+
+
+## Plot: Missing Values (%) vs Error Rate in the Univariate Case in RPART
+p.missing <- c("10%", "30%", "50%")
+val.sur.p5.mcar <- data.frame(val.sim1.matrix.m9.surr[1], val.sim1.matrix.m9.surr[4], val.sim1.matrix.m9.surr[7])
+val.sur.p5.mcar <- t(val.sur.p5.mcar)
+val.sur.p5.mcar <- as.data.frame(val.sur.p5.mcar)
+val.mia.p5.mcar <- data.frame(val.sim1.matrix.m9.mia[1], val.sim1.matrix.m9.mia[4], val.sim1.matrix.m9.mia[7])
+val.mia.p5.mcar <- t(val.mia.p5.mcar)
+val.mia.p5.mcar <- as.data.frame(val.mia.p5.mcar)
+
+
+g10 <- ggplot(data = val.sur.p5.mcar, aes(p.missing,MCAR, group = 1)) +
+  geom_line(data = val.sur.p5.mcar, aes(p.missing,MCAR, colour = "Surrogate Split")) +
+  geom_point(data = val.sur.p5.mcar, aes(p.missing,MCAR), color = "red") +
+  geom_line(data = val.mia.p5.mcar, aes(x = p.missing, y = MCAR, group = 1, colour = "MIA"), 
+            color = "lightblue") +
+  geom_point(data = val.mia.p5.mcar, aes(x = p.missing, y = MCAR, colour = "MIA"),
+             color = "lightblue") +
+  theme_classic() +
+  xlab("Missing Values (%)") + ylab("Excess Error Rate") +
+  ggtitle("Missing Values (%) vs Excess Error Rate (MCAR)") +
+  guides(color = guide_legend(title = "Method"))
+
+
+val.sur.p3.mcar <- data.frame(val.sim1.matrix.m9.surr[10], val.sim1.matrix.m9.surr[13], val.sim1.matrix.m9.surr[16])
+val.sur.p3.mcar <- t(val.sur.p3.mcar)
+val.sur.p3.mcar <- as.data.frame(val.sur.p3.mcar)
+val.mia.p3.mcar <- data.frame(val.sim1.matrix.m9.mia[10], val.sim1.matrix.m9.mia[13], val.sim1.matrix.m9.mia[16])
+val.mia.p3.mcar <- t(val.mia.p3.mcar)
+val.mia.p3.mcar <- as.data.frame(val.mia.p3.mcar)
+
+
+g11 <- ggplot(data = val.sur.p3.mcar, aes(p.missing,MCAR, group = 1)) +
+  geom_line(data = val.sur.p3.mcar, aes(p.missing,MCAR, colour = "Surrogate Split")) +
+  geom_point(data = val.sur.p3.mcar, aes(p.missing,MCAR), color = "lightblue") +
+  geom_line(data = val.mia.p3.mcar, aes(x = p.missing, y = MCAR, group = 1), 
+            color = "red") +
+  geom_point(data = val.mia.p3.mcar, aes(x = p.missing, y = MCAR, colour = "MIA"),
+             color = "red") +
+  geom_line(data = val.sur.p3.mcar.m4, aes(p.missing, MCAR, colour = "Surrogate Split"),
+            linetype = "longdash") +
+  geom_point(data = val.sur.p3.mcar.m4, aes(p.missing, MCAR, colour = "Surrogate Split"), 
+             color = "lightblue") +
+  geom_line(data = val.mia.p3.mcar.m4, aes(x = p.missing, y = MCAR, group = 1), 
+            linetype = "longdash", color = "red") +
+  geom_point(data = val.mia.p3.mcar.m4, aes(x = p.missing, y = MCAR, colour = "MIA")) +
+  theme_classic() +
+  xlab("Missing Values (%)") + ylab("Excess Error Rate") +
+  guides(color = guide_legend(title = "Method")) + 
+  annotate(geom = "text", x = 3.2, y = 19, label = "m = 0.9", color = "black", size = 3) + 
+  annotate(geom = "text", x = 3.2, y = 12.2, label = "m = 0.4", color = "black", size = 3)
+
+
+val.sur.p1.mcar <- data.frame(val.sim1.matrix.m9.surr[19], val.sim1.matrix.m9.surr[22], val.sim1.matrix.m9.surr[25])
+val.sur.p1.mcar <- t(val.sur.p1.mcar)
+val.sur.p1.mcar <- as.data.frame(val.sur.p1.mcar)
+val.mia.p1.mcar <- data.frame(val.sim1.matrix.m9.mia[19], val.sim1.matrix.m9.mia[22], val.sim1.matrix.m9.mia[25])
+val.mia.p1.mcar <- t(val.mia.p1.mcar)
+val.mia.p1.mcar <- as.data.frame(val.mia.p1.mcar)
+
+
+g12 <- ggplot(data = val.sur.p1.mcar, aes(p.missing,MCAR, group = 1)) +
+  geom_line(data = val.sur.p1.mcar, aes(p.missing,MCAR, colour = "Surrogate Split")) +
+  geom_point(data = val.sur.p1.mcar, aes(p.missing,MCAR), color = "lightblue") +
+  geom_line(data = val.mia.p1.mcar, aes(x = p.missing, y = MCAR, group = 1), 
+            color = "red") +
+  geom_point(data = val.mia.p1.mcar, aes(x = p.missing, y = MCAR, colour = "MIA"),
+             color = "red") +
+  geom_line(data = val.sur.p1.mcar.m4, aes(p.missing, MCAR, colour = "Surrogate Split"),
+            linetype = "longdash") +
+  geom_point(data = val.sur.p1.mcar.m4, aes(p.missing, MCAR, colour = "Surrogate Split"), 
+             color = "lightblue") +
+  geom_line(data = val.mia.p1.mcar.m4, aes(x = p.missing, y = MCAR, group = 1), 
+            linetype = "longdash", color = "red") +
+  geom_point(data = val.mia.p1.mcar.m4, aes(x = p.missing, y = MCAR, colour = "MIA")) +
+  theme_classic() +
+  xlab("Missing Values (%)") + ylab("Excess Error Rate") +
+  guides(color = guide_legend(title = "Method")) + 
+  annotate(geom = "text", x = 3.2, y = 24, label = "m = 0.9", color = "black", size = 3) + 
+  annotate(geom = "text", x = 3.2, y = 15, label = "m = 0.4", color = "black", size = 3)
+
+library(ggpubr)
+
+
+ggarrange(g10, g11, g12,ncol = 1, nrow = 3, heights = c(3, 3, 3))
+
+
+
+val.sur.p5.mar <- data.frame(val.sim1.matrix.m9.surr[2], val.sim1.matrix.m9.surr[5], val.sim1.matrix.m9.surr[8])
+val.sur.p5.mar <- t(val.sur.p5.mar)
+val.sur.p5.mar <- as.data.frame(val.sur.p5.mar)
+val.mia.p5.mar <- data.frame(val.sim1.matrix.m9.mia[2], val.sim1.matrix.m9.mia[5], val.sim1.matrix.m9.mia[8])
+val.mia.p5.mar <- t(val.mia.p5.mar)
+val.mia.p5.mar <- as.data.frame(val.mia.p5.mar)
+
+val.sur.p5.mar.m4 <- data.frame(val.sim1.matrix.m4.surr[2], val.sim1.matrix.m4.surr[5], val.sim1.matrix.m4.surr[8])
+val.sur.p5.mar.m4 <- t(val.sur.p5.mar.m4)
+val.sur.p5.mar.m4 <- as.data.frame(val.sur.p5.mar.m4)
+val.mia.p5.mar.m4 <- data.frame(val.sim1.matrix.m4.mia[2], val.sim1.matrix.m4.mia[5], val.sim1.matrix.m4.mia[8])
+val.mia.p5.mar.m4 <- t(val.mia.p5.mar.m4)
+val.mia.p5.mar.m4 <- as.data.frame(val.mia.p5.mar.m4)
+
+
+g4 <- ggplot(data = val.sur.p5.mar, aes(p.missing,MAR, group = 1)) +
+  geom_line(data = val.sur.p5.mar, aes(p.missing,MAR, colour = "Surrogate Split")) +
+  geom_point(data = val.sur.p5.mar, aes(p.missing,MAR), color = "lightblue") +
+  geom_line(data = val.mia.p5.mar, aes(x = p.missing, y = MAR, group = 1), 
+            color = "red") +
+  geom_point(data = val.mia.p5.mar, aes(x = p.missing, y = MAR, colour = "MIA"),
+             color = "red") +
+  geom_line(data = val.sur.p5.mar.m4, aes(p.missing, MAR, colour = "Surrogate Split"),
+            linetype = "longdash") +
+  geom_point(data = val.sur.p5.mar.m4, aes(p.missing, MAR, colour = "Surrogate Split"), 
+             color = "lightblue") +
+  geom_line(data = val.mia.p5.mar.m4, aes(x = p.missing, y = MAR, group = 1), 
+            linetype = "longdash", color = "red") +
+  geom_point(data = val.mia.p5.mar.m4, aes(x = p.missing, y = MAR, colour = "MIA")) +
+  theme_classic() +
+  xlab("Missing Values (%)") + ylab("Excess Error Rate") +
+  ggtitle("Missing Values (%) vs Excess Error Rate (MAR)") +
+  guides(color = guide_legend(title = "Method")) + 
+  annotate(geom = "text", x = 3.2, y = 25, label = "m = 0.9", color = "black", size = 3) + 
+  annotate(geom = "text", x = 3.2, y = 15.2, label = "m = 0.4", color = "black", size = 3)
+
+
+val.sur.p3.mar <- data.frame(val.sim1.matrix.m9.surr[11], val.sim1.matrix.m9.surr[14], val.sim1.matrix.m9.surr[17])
+val.sur.p3.mar <- t(val.sur.p3.mar)
+val.sur.p3.mar <- as.data.frame(val.sur.p3.mar)
+val.mia.p3.mar <- data.frame(val.sim1.matrix.m9.mia[11], val.sim1.matrix.m9.mia[14], val.sim1.matrix.m9.mia[17])
+val.mia.p3.mar <- t(val.mia.p3.mar)
+val.mia.p3.mar <- as.data.frame(val.mia.p3.mar)
+
+val.sur.p3.mar.m4 <- data.frame(val.sim1.matrix.m4.surr[11], val.sim1.matrix.m4.surr[14], val.sim1.matrix.m4.surr[17])
+val.sur.p3.mar.m4 <- t(val.sur.p3.mar.m4)
+val.sur.p3.mar.m4 <- as.data.frame(val.sur.p3.mar.m4)
+val.mia.p3.mar.m4 <- data.frame(val.sim1.matrix.m4.mia[11], val.sim1.matrix.m4.mia[14], val.sim1.matrix.m4.mia[17])
+val.mia.p3.mar.m4 <- t(val.mia.p3.mar.m4)
+val.mia.p3.mar.m4 <- as.data.frame(val.mia.p3.mar.m4)
+
+g5 <- ggplot(data = val.sur.p3.mar, aes(p.missing,MAR, group = 1)) +
+  geom_line(data = val.sur.p3.mar, aes(p.missing,MAR, colour = "Surrogate Split")) +
+  geom_point(data = val.sur.p3.mar, aes(p.missing,MAR), color = "lightblue") +
+  geom_line(data = val.mia.p3.mar, aes(x = p.missing, y = MAR, group = 1), 
+            color = "red") +
+  geom_point(data = val.mia.p3.mar, aes(x = p.missing, y = MAR, colour = "MIA"),
+             color = "red") +
+  geom_line(data = val.sur.p3.mar.m4, aes(p.missing, MAR, colour = "Surrogate Split"),
+            linetype = "longdash") +
+  geom_point(data = val.sur.p3.mar.m4, aes(p.missing, MAR, colour = "Surrogate Split"), 
+             color = "lightblue") +
+  geom_line(data = val.mia.p3.mar.m4, aes(x = p.missing, y = MAR, group = 1), 
+            linetype = "longdash", color = "red") +
+  geom_point(data = val.mia.p3.mar.m4, aes(x = p.missing, y = MAR, colour = "MIA")) +
+  theme_classic() +
+  xlab("Missing Values (%)") + ylab("Excess Error Rate") +
+  guides(color = guide_legend(title = "Method")) + 
+  annotate(geom = "text", x = 3.2, y = 20, label = "m = 0.9", color = "black", size = 3) + 
+  annotate(geom = "text", x = 3.2, y = 12, label = "m = 0.4", color = "black", size = 3)
+
+
+val.sur.p1.mar <- data.frame(val.sim1.matrix.m9.surr[20], val.sim1.matrix.m9.surr[23], val.sim1.matrix.m9.surr[26])
+val.sur.p1.mar <- t(val.sur.p1.mar)
+val.sur.p1.mar <- as.data.frame(val.sur.p1.mar)
+val.mia.p1.mar <- data.frame(val.sim1.matrix.m9.mia[20], val.sim1.matrix.m9.mia[23], val.sim1.matrix.m9.mia[26])
+val.mia.p1.mar <- t(val.mia.p1.mar)
+val.mia.p1.mar <- as.data.frame(val.mia.p1.mar)
+
+val.sur.p1.mar.m4 <- data.frame(val.sim1.matrix.m4.surr[20], val.sim1.matrix.m4.surr[23], val.sim1.matrix.m4.surr[26])
+val.sur.p1.mar.m4 <- t(val.sur.p1.mar.m4)
+val.sur.p1.mar.m4 <- as.data.frame(val.sur.p1.mar.m4)
+val.mia.p1.mar.m4 <- data.frame(val.sim1.matrix.m4.mia[20], val.sim1.matrix.m4.mia[23], val.sim1.matrix.m4.mia[26])
+val.mia.p1.mar.m4 <- t(val.mia.p1.mar.m4)
+val.mia.p1.mar.m4 <- as.data.frame(val.mia.p1.mar.m4)
+
+g6 <- ggplot(data = val.sur.p1.mar, aes(p.missing,MAR, group = 1)) +
+  geom_line(data = val.sur.p1.mar, aes(p.missing,MAR, colour = "Surrogate Split")) +
+  geom_point(data = val.sur.p1.mar, aes(p.missing,MAR), color = "lightblue") +
+  geom_line(data = val.mia.p1.mar, aes(x = p.missing, y = MAR, group = 1), 
+            color = "red") +
+  geom_point(data = val.mia.p1.mar, aes(x = p.missing, y = MAR, colour = "MIA"),
+             color = "red") +
+  geom_line(data = val.sur.p1.mar.m4, aes(p.missing, MAR, colour = "Surrogate Split"),
+            linetype = "longdash") +
+  geom_point(data = val.sur.p1.mar.m4, aes(p.missing, MAR, colour = "Surrogate Split"), 
+             color = "lightblue") +
+  geom_line(data = val.mia.p1.mar.m4, aes(x = p.missing, y = MAR, group = 1), 
+            linetype = "longdash", color = "red") +
+  geom_point(data = val.mia.p1.mar.m4, aes(x = p.missing, y = MAR, colour = "MIA")) +
+  theme_classic() +
+  xlab("Missing Values (%)") + ylab("Excess Error Rate") +
+  guides(color = guide_legend(title = "Method")) + 
+  annotate(geom = "text", x = 3.2, y = 21.6, label = "m = 0.9", color = "black", size = 3) + 
+  annotate(geom = "text", x = 3.2, y = 14.3, label = "m = 0.4", color = "black", size = 3)
+
+ggarrange(g4, g5, g6,ncol = 1, nrow = 3, heights = c(3, 3, 3))
+
+
 # plot ecperiment I NMAR
 
 val.sur.p5.nmar <- data.frame(val.sim1.matrix.m9.surr[3], val.sim1.matrix.m9.surr[6], val.sim1.matrix.m9.surr[9])
