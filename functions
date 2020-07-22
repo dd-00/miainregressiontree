@@ -1,3 +1,8 @@
+library(tidyverse)
+library(rpart)
+library(mice)
+
+
 ## Generate data function for rpart scenario 1
 
 generate.data.r <- function(coefs = NULL, n, sigma = NULL, regression = T, var_names, c) {
@@ -81,7 +86,7 @@ generate.data.c <- function(coefs = NULL, n, sigma = NULL, regression = T, var_n
 
 
 
-## Generate MCAR MAR NMAR function
+
 
 missingness <- function(data, n, m.mcar, m.nmar, groups, labels, p) {
   # data: dataset
@@ -98,7 +103,8 @@ missingness <- function(data, n, m.mcar, m.nmar, groups, labels, p) {
   num.miss <- round((nrow(data) / 2) * m.nmar)
   data.mcar.1 <- data[ ,1]
   data.mar.1 <- data[ ,1]
-  data.nmar.1 <- data
+  data.nmar.1 <- data[, 1]
+  data2 <- data [ ,-1]
   x.mar <- list()
   x.mcar <- list()
   for(i in 1:d){
@@ -116,20 +122,129 @@ missingness <- function(data, n, m.mcar, m.nmar, groups, labels, p) {
       ungroup %>%
       select(x.na)
     # generate NMAR
-    data.nmar.1[data.nmar.1[, i + 1] > sort(data.nmar.1[, sam], decreasing = TRUE)[num.miss], i + 1] <- NA
+    #data.nmar.1[data.nmar.1[, i + 1] > sort(data.nmar.1[, sam], decreasing = TRUE)[num.miss], i + 1] <- NA
     
+    #data.nmar.1 <- as.data.frame(data.nmar.1)
+    
+    #data.nmar.1 <- ampute(data = data.nmar.1, prop = perc, mech = "MNAR")
+    #pat <- data.nmar.1$patterns
+    #pat[2, 1] <- 0
+    #mypat <- rbind(pat, var)
+    
+    #data.nmar.1 <- ampute(data = data.nmar.1, prop = perc, mech = "MNAR", patterns = var)$amp
+    
+    #data.nmar.1 <- as.data.frame(data.nmar.1)
+    
+    #data.mcar.1 <- do.call(cbind, list(data.mcar.1, x.mcar[[i]]))
+    #data.mar.1 <- do.call(cbind, list(data.mar.1, x.mar[[i]]))
     data.mcar.1 <- do.call(cbind, list(data.mcar.1, x.mcar[[i]]))
     data.mar.1 <- do.call(cbind, list(data.mar.1, x.mar[[i]]))
+    
   }
+  #data.nmar.1 <- as.data.frame(data.nmar.1)
+  data2 <- data[ ,-1]
+  #data.nmar.1.2 <- ampute(data = data, prop = perc, mech = "MNAR")$amp
+  #patterns <- data.nmar.1.2$patterns
+  #patterns[1:3, 2] <- 0
+  data.nmar.1 <- ampute(data = data2, prop = perc, mech = "MNAR", patterns = var, type = "MID")$amp
+  data.nmar.1 <- as.data.frame(data.nmar.1)
   data.mcar <- data.frame(data.mcar.1, data[ ,-c(1:(d + 1))])
   data.mar <- data.frame(data.mar.1, data[ ,-c(1:(d + 1))])
+  
+  #data.nmar.1 <- as.data.frame(data.nmar.1)
+  
+  #data.nmar.1 <- do.call(cbind, list(data.mcar.1, data.nmar.1))
+  data.nmar.1 <- cbind(data.mcar.1, data.nmar.1)
+  data.nmar.1 <- as.data.frame(data.nmar.1)
+  
   data.nmar <- data.frame(data.nmar.1)
   colnames(data.mcar) <- paste(colnames(data))
   colnames(data.mar) <- paste(colnames(data))
   colnames(data.nmar) <- paste(colnames(data))
+  #colnames(data.nmar)[1] <- "y"
+  
   
   return(list(data.mcar = data.mcar, data.mar = data.mar, data.nmar = data.nmar))
 }
+
+
+
+missingness2 <- function(data, n, m.mcar, m.nmar, groups, labels, p) {
+  # data: dataset
+  # n: number of observations
+  # m.mar: number of missing values to input in MCAR
+  # m.mar: fraction of missing values to input in MAR
+  # groups: create a grouping variable, whose value is the fraction of the 
+  # group that will be set to missing.  
+  # labels: set the label values, group by frac and set a randomly selected 
+  # fraction of the values to NA, using frac to determine the fraction of values set to NA.
+  # p: define number of variables to input missing values
+  # number of columns - p = number of variables to input missing values
+  d <- ncol(data) - p
+  num.miss <- round((nrow(data) / 2) * m.nmar)
+  data.mcar.1 <- data[ ,1]
+  data.mar.1 <- data[ ,1]
+  data.nmar.1 <- data[, 1]
+  data2 <- data [ ,-1]
+  x.mar <- list()
+  x.mcar <- list()
+  for(i in 1:d){
+    sam <- sample(2:ncol(data), 1)
+    samples.mcar <- sample(c(rep(NA, m.mcar), rep(0, n - m.mcar)))
+    # generate MCAR
+    x.mcar[[i]] <- data[ ,i + 1] + samples.mcar # random input
+    # generate MAR
+    x.mar[[i]] <- data %>% 
+      mutate(x.na = data[ ,i + 1],
+             frac = as.numeric(as.character(cut(data[ ,sam], breaks=c(-Inf, groups[1], groups[2], Inf),
+                                                labels = c(labels[1], labels[2], labels[3]))))) %>% 
+      group_by(frac) %>% 
+      mutate(x.na = replace(x.na, row_number(x.na) %in% sample(1:n(), round(unique(frac)*n())), NA)) %>% 
+      ungroup %>%
+      select(x.na)
+    # generate NMAR
+    
+    data.mcar.1 <- do.call(cbind, list(data.mcar.1, x.mcar[[i]]))
+    data.mar.1 <- do.call(cbind, list(data.mar.1, x.mar[[i]]))
+    
+  }
+  #data.nmar.1 <- as.data.frame(data.nmar.1)
+  data2 <- data[ ,-1]
+  data.nmar.1.2 <- ampute(data = data2)
+  patterns <- data.nmar.1.2$patterns
+  patterns2[1:5, 5] <- 1
+  patterns2[4, 4] <- 1
+  patterns2[4, 1] <- 0
+  patterns2[5, 2] <- 0
+  #patterns[1:5, 5] <- 1
+  #patterns[4, 4] <- 1
+  ###patterns[1, 3] <- 0
+  #patterns[4, 3] <- 0
+  #patterns[5, 2] <- 0
+  #patterns[1, 2] <- 1
+  #patterns[2, 2] <- 1
+  #patterns[2, 1] <- 0
+  data.nmar.1 <- ampute(data = data2, prop = perc, mech = "MNAR", patterns = patterns , type = "MID")$amp
+  data.nmar.1 <- as.data.frame(data.nmar.1)
+  data.mcar <- data.frame(data.mcar.1, data[ ,-c(1:(d + 1))])
+  data.mar <- data.frame(data.mar.1, data[ ,-c(1:(d + 1))])
+  
+  #data.nmar.1 <- as.data.frame(data.nmar.1)
+  
+  #data.nmar.1 <- do.call(cbind, list(data.mcar.1, data.nmar.1))
+  data.nmar.1 <- cbind(data.mcar.1, data.nmar.1)
+  data.nmar.1 <- as.data.frame(data.nmar.1)
+  
+  data.nmar <- data.frame(data.nmar.1)
+  colnames(data.mcar) <- paste(colnames(data))
+  colnames(data.mar) <- paste(colnames(data))
+  colnames(data.nmar) <- paste(colnames(data))
+  #colnames(data.nmar)[1] <- "y"
+  
+  
+  return(list(data.mcar = data.mcar, data.mar = data.mar, data.nmar = data.nmar))
+}
+
 
 
 
@@ -186,7 +301,7 @@ prune.f <- function(fitted, alpha) {
   cp.row.error <-  min.cp.row[ ,4] + alpha * min.cp.row[ ,5] 
   cp.bestrow <- subset(fit.tree.cptab, fit.tree.cptab[, "xerror"] <= cp.row.error)[1, ]
   #pr.tree <- prune(fitted, cp.bestrow[1])
-
+  
   # return the values for the best cp parameter
   return(cp.bestrow)
 }
@@ -194,18 +309,20 @@ prune.f <- function(fitted, alpha) {
 
 
 
-# Simulation function for scenario 1
+# Simulation function for experimet 1
 
 sim.fun.r2 <- function(coefs, sigma, var_names, formula, R, n, m.mcar, m.nmar, groups, 
                        labels, p, minsize, c, regression = TRUE) {
   J <- 3
   e.rate.sur <- matrix(nrow = R, ncol = J)
   e.rate.mia <- matrix(nrow = R, ncol = J)
+  e.sur <- matrix(nrow = R, ncol = J)
+  e.mia <- matrix(nrow = R, ncol = J)
   for (r in 1:R) {
     data.complete.sim <- generate.data.r(coefs, n = n, regression = TRUE, sigma, var_names = var_names, c)
     fit.complete <- rpart(formula = formula, data = data.complete.sim, 
                           control = rpart.control(usesurrogate = 0L))
-    cv.error.complete <- prune.f(fit.rpart.9, 1)[4]
+    cv.error.complete <- prune.f(fit.complete, 1)[4]
     for (j in 1:J) {
       data.sim.na <- missingness(data = data.complete.sim, n = n, m.mcar = m.mcar, m.nmar = m.nmar, 
                                  groups = c(groups[1], groups[2]), 
@@ -231,11 +348,160 @@ sim.fun.r2 <- function(coefs, sigma, var_names, formula, R, n, m.mcar, m.nmar, g
       }
       e.rate.sur[r, j] <- ((error.sur - cv.error.complete) / cv.error.complete) * 100
       e.rate.mia[r, j] <- ((error.new.mia - cv.error.complete) / cv.error.complete) * 100
-      #e.sur[r, j] <- error.sur 
-      #e.mia[r, j] <- error.new.mia 
+      e.sur[r, j] <- error.sur 
+      e.mia[r, j] <- error.new.mia 
     }
   }
-  out <- list(e.rate.sur = e.rate.sur, e.rate.mia = e.rate.mia)
+  out <- list(e.rate.sur = e.rate.sur, e.rate.mia = e.rate.mia, e.sur = e.sur, e.mia = e.mia)
   
   return(out)
 }
+
+
+
+sim.fun.r2.2 <- function(coefs, sigma, var_names, formula, R, n, m.mcar, m.nmar, groups, 
+                         labels, p, minsize, c, regression = TRUE) {
+  J <- 3
+  e.rate.sur <- matrix(nrow = R, ncol = J)
+  e.rate.mia <- matrix(nrow = R, ncol = J)
+  e.sur <- matrix(nrow = R, ncol = J)
+  e.mia <- matrix(nrow = R, ncol = J)
+  for (r in 1:R) {
+    data.complete.sim <- generate.data.r(coefs, n = n, regression = TRUE, sigma, var_names = var_names, c)
+    fit.complete <- rpart(formula = formula, data = data.complete.sim, 
+                          control = rpart.control(usesurrogate = 0L))
+    cv.error.complete <- prune.f(fit.complete, 1)[4]
+    for (j in 1:J) {
+      data.sim.na <- missingness2(data = data.complete.sim, n = n, m.mcar = m.mcar, m.nmar = m.nmar, 
+                                  groups = c(groups[1], groups[2]), 
+                                  labels = c(labels[1], labels[2], labels[3]), p = p)[[j]] 
+      sum_na <- apply(data.sim.na, MARGIN = 1, function(x) sum(is.na(x)))
+      na_ind <- which(sum_na == ncol(data.sim.na[ ,-1]))
+      na_ind_n <- sum(na_ind)
+      data.new.mia <- miss4(formula = y ~., data.sim.na)
+      if (na_ind_n == 0) {
+        fit.sur <- rpart(formula = formula, data = data.sim.na, 
+                         control = rpart.control(usesurrogate = 2L))
+        error.sur <- prune.f(fit.sur, 1)[4]
+        fit.new.mia <- rpart(formula = y ~., data = data.new.mia, 
+                             control = rpart.control(usesurrogate = 0L))
+        error.new.mia <- prune.f(fit.new.mia, 1)[4]
+      } else {
+        fit.sur <- rpart(formula = formula, data = data.sim.na[-na_ind, ], 
+                         control = rpart.control(usesurrogate = 2L))
+        error.sur <- prune.f(fit.sur, 1)[4]
+        fit.new.mia <- rpart(formula = y ~., data = data.new.mia[-na_ind, ], 
+                             control = rpart.control(usesurrogate = 0L))
+        error.new.mia <- prune.f(fit.new.mia, 1)[4]
+      }
+      e.rate.sur[r, j] <- ((error.sur - cv.error.complete) / cv.error.complete) * 100
+      e.rate.mia[r, j] <- ((error.new.mia - cv.error.complete) / cv.error.complete) * 100
+      e.sur[r, j] <- error.sur 
+      e.mia[r, j] <- error.new.mia 
+    }
+  }
+  out <- list(e.rate.sur = e.rate.sur, e.rate.mia = e.rate.mia, e.sur = e.sur, e.mia = e.mia)
+  
+  return(out)
+}
+
+
+
+
+# Simulation function for experimet 2
+
+sim2.fun.r2 <- function(coefs, sigma, var_names, formula, R, n, m.mcar, m.nmar, groups, 
+                       labels, p, minsize, c, regression = TRUE) {
+  J <- 3
+  e.rate.sur <- matrix(nrow = R, ncol = J)
+  e.rate.mia <- matrix(nrow = R, ncol = J)
+  e.sur <- matrix(nrow = R, ncol = J)
+  e.mia <- matrix(nrow = R, ncol = J)
+  for (r in 1:R) {
+    data.complete.sim <- generate.data.c(coefs, n = n, regression = TRUE, sigma, var_names = var_names, c)
+    fit.complete <- rpart(formula = formula, data = data.complete.sim, 
+                          control = rpart.control(usesurrogate = 0L))
+    cv.error.complete <- prune.f(fit.complete, 1)[4]
+    for (j in 1:J) {
+      data.sim.na <- missingness(data = data.complete.sim, n = n, m.mcar = m.mcar, m.nmar = m.nmar, 
+                                 groups = c(groups[1], groups[2]), 
+                                 labels = c(labels[1], labels[2], labels[3]), p = p)[[j]] 
+      sum_na <- apply(data.sim.na, MARGIN = 1, function(x) sum(is.na(x)))
+      na_ind <- which(sum_na == ncol(data.sim.na[ ,-1]))
+      na_ind_n <- sum(na_ind)
+      data.new.mia <- miss4(formula = y ~., data.sim.na)
+      if (na_ind_n == 0) {
+        fit.sur <- rpart(formula = formula, data = data.sim.na, 
+                         control = rpart.control(usesurrogate = 2L))
+        error.sur <- prune.f(fit.sur, 1)[4]
+        fit.new.mia <- rpart(formula = y ~., data = data.new.mia, 
+                             control = rpart.control(usesurrogate = 0L))
+        error.new.mia <- prune.f(fit.new.mia, 1)[4]
+      } else {
+        fit.sur <- rpart(formula = formula, data = data.sim.na[-na_ind, ], 
+                         control = rpart.control(usesurrogate = 2L))
+        error.sur <- prune.f(fit.sur, 1)[4]
+        fit.new.mia <- rpart(formula = y ~., data = data.new.mia[-na_ind, ], 
+                             control = rpart.control(usesurrogate = 0L))
+        error.new.mia <- prune.f(fit.new.mia, 1)[4]
+      }
+      e.rate.sur[r, j] <- ((error.sur - cv.error.complete) / cv.error.complete) * 100
+      e.rate.mia[r, j] <- ((error.new.mia - cv.error.complete) / cv.error.complete) * 100
+      e.sur[r, j] <- error.sur 
+      e.mia[r, j] <- error.new.mia 
+    }
+  }
+  out <- list(e.rate.sur = e.rate.sur, e.rate.mia = e.rate.mia, e.sur = e.sur, e.mia = e.mia)
+  
+  return(out)
+}
+
+
+
+sim2.fun.r2.2 <- function(coefs, sigma, var_names, formula, R, n, m.mcar, m.nmar, groups, 
+                         labels, p, minsize, c, regression = TRUE) {
+  J <- 3
+  e.rate.sur <- matrix(nrow = R, ncol = J)
+  e.rate.mia <- matrix(nrow = R, ncol = J)
+  e.sur <- matrix(nrow = R, ncol = J)
+  e.mia <- matrix(nrow = R, ncol = J)
+  for (r in 1:R) {
+    data.complete.sim <- generate.data.c(coefs, n = n, regression = TRUE, sigma, var_names = var_names, c)
+    fit.complete <- rpart(formula = formula, data = data.complete.sim, 
+                          control = rpart.control(usesurrogate = 0L))
+    cv.error.complete <- prune.f(fit.complete, 1)[4]
+    for (j in 1:J) {
+      data.sim.na <- missingness2(data = data.complete.sim, n = n, m.mcar = m.mcar, m.nmar = m.nmar, 
+                                  groups = c(groups[1], groups[2]), 
+                                  labels = c(labels[1], labels[2], labels[3]), p = p)[[j]] 
+      sum_na <- apply(data.sim.na, MARGIN = 1, function(x) sum(is.na(x)))
+      na_ind <- which(sum_na == ncol(data.sim.na[ ,-1]))
+      na_ind_n <- sum(na_ind)
+      data.new.mia <- miss4(formula = y ~., data.sim.na)
+      if (na_ind_n == 0) {
+        fit.sur <- rpart(formula = formula, data = data.sim.na, 
+                         control = rpart.control(usesurrogate = 2L))
+        error.sur <- prune.f(fit.sur, 1)[4]
+        fit.new.mia <- rpart(formula = y ~., data = data.new.mia, 
+                             control = rpart.control(usesurrogate = 0L))
+        error.new.mia <- prune.f(fit.new.mia, 1)[4]
+      } else {
+        fit.sur <- rpart(formula = formula, data = data.sim.na[-na_ind, ], 
+                         control = rpart.control(usesurrogate = 2L))
+        error.sur <- prune.f(fit.sur, 1)[4]
+        fit.new.mia <- rpart(formula = y ~., data = data.new.mia[-na_ind, ], 
+                             control = rpart.control(usesurrogate = 0L))
+        error.new.mia <- prune.f(fit.new.mia, 1)[4]
+      }
+      e.rate.sur[r, j] <- ((error.sur - cv.error.complete) / cv.error.complete) * 100
+      e.rate.mia[r, j] <- ((error.new.mia - cv.error.complete) / cv.error.complete) * 100
+      e.sur[r, j] <- error.sur 
+      e.mia[r, j] <- error.new.mia 
+    }
+  }
+  out <- list(e.rate.sur = e.rate.sur, e.rate.mia = e.rate.mia, e.sur = e.sur, e.mia = e.mia)
+  
+  return(out)
+}
+
+
