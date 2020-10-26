@@ -1,5 +1,8 @@
 ## experiment 1 with m = 0.9
 
+
+## how the seed was chosen:
+
 # convert the time into a numeric variable
 #in.seed <- Sys.time()
 #in.seed <- as.integer(in.seed)
@@ -7,11 +10,11 @@
 #seed1 <- in.seed %% 100000
 #seed1 <- seed1 
 #print(seed1)
-# 46320
 
 
 
-# the seed used was: 46320
+
+
 
 # p = 5 is 10%  missing with 1 variable with NA 
 
