@@ -210,12 +210,12 @@ missingness2 <- function(data, n, m.mcar, m.nmar, groups, labels, p) {
   #data.nmar.1 <- as.data.frame(data.nmar.1)
   data2 <- data[ ,-1]
   data.nmar.1.2 <- ampute(data = data2)
-  patterns <- data.nmar.1.2$patterns
+  patterns2 <- data.nmar.1.2$patterns
   patterns2[1:5, 5] <- 1
   patterns2[4, 4] <- 1
   patterns2[4, 1] <- 0
   patterns2[5, 2] <- 0
-  data.nmar.1 <- ampute(data = data2, prop = perc, mech = "MNAR", patterns = patterns , type = "MID")$amp
+  data.nmar.1 <- ampute(data = data2, prop = perc, mech = "MNAR", patterns = patterns2 , type = "MID")$amp
   data.nmar.1 <- as.data.frame(data.nmar.1)
   data.mcar <- data.frame(data.mcar.1, data[ ,-c(1:(d + 1))])
   data.mar <- data.frame(data.mar.1, data[ ,-c(1:(d + 1))])
@@ -235,6 +235,8 @@ missingness2 <- function(data, n, m.mcar, m.nmar, groups, labels, p) {
   
   return(list(data.mcar = data.mcar, data.mar = data.mar, data.nmar = data.nmar))
 }
+
+
 
 
 
