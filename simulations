@@ -680,21 +680,13 @@ newdatasim1full.long <- as.data.frame(newdatasim1full.long)
 sum(is.na(newdatasim1full.long))
 
 
-library(ez)
-#sim_anova1 <- suppressWarnings(ezANOVA( # use ezANOVA for analysis
-#  data = newdatasim1full.long
-#  , dv = measurement 
-#  , wid = id
-#  , within_full = .c(method, v.miss)
-#  , between = .c(missing.perc, tuning, values)
-#))
 
 sim_anova2 <- suppressWarnings(ezANOVA( # use ezANOVA for analysis
   data = newdatasim1full.long
   , dv = measurement 
   , wid = id
   , within_full = method
-  , between = .c(missing.perc, tuning, values)
+  , between = .c(tuning, values)
 ))
 
 AnovaResult1 <- cbind(sim_anova2$ANOVA[1:3], (sim_anova2$ANOVA[,c(4,5,7)]))
@@ -1414,20 +1406,14 @@ sum(is.na(newdatasim1full.long))
 
 
 library(ez)
-#sim_anova1 <- suppressWarnings(ezANOVA( # use ezANOVA for analysis
-#  data = newdatasim1full.long
-#  , dv = measurement 
-#  , wid = id
-#  , within_full = .c(method, v.miss)
-#  , between = .c(missing.perc, tuning, values)
-#))
+
 
 sim_anova2 <- suppressWarnings(ezANOVA( # use ezANOVA for analysis
   data = newdatasim1full.long
   , dv = measurement 
   , wid = id
   , within_full = method
-  , between = .c(missing.perc, values)
+  , between = values
 ))
 
 AnovaResult1 <- cbind(sim_anova2$ANOVA[1:3], (sim_anova2$ANOVA[,c(4,5,7)]))
